@@ -196,9 +196,9 @@ rutp:OWLDISJC a rut:Pattern ;
     rut:sparqlPrevalencePattern """ SELECT ?total
                                     WHERE {
                                         {SELECT (COUNT(distinct ?this1) as ?c1)
-                                         WHERE { ?this1 a dbo:Place }} 
+                                         WHERE { ?this1 a %%T1%% }} 
                                         {SELECT (COUNT(distinct ?this2) as ?c2)
-                                         WHERE { ?this2 a dbo:Agent }} 
+                                         WHERE { ?this2 a %%T2%% }} 
                                         BIND( IF(?c1 < ?c2, ?c1, ?c2 ) AS ?total )
                                     } """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
