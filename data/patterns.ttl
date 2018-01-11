@@ -193,7 +193,14 @@ rutp:OWLDISJC a rut:Pattern ;
                                     ?this rdf:type %%T1%% .
                                     ?this rdf:type %%T2%% .
                                 } """ ;
-    # rut:sparqlPrevalencePattern """  """ ;
+    # rut:sparqlPrevalencePattern """ SELECT ?total
+                                      WHERE {
+                                          {SELECT (COUNT(distinct ?this1) as ?c1)
+                                           WHERE { ?this1 a dbo:Place }} 
+                                          {SELECT (COUNT(distinct ?this2) as ?c2)
+                                           WHERE { ?this2 a dbo:Agent }} 
+                                          BIND( IF(?c1 < ?c2, ?c1, ?c2 ) AS ?total )
+                                      } """ ;
     rut:parameter rutp:OWLDISJC-T1 ;
     rut:parameter rutp:OWLDISJC-T2 ;
     rut:resultAnnotation [
