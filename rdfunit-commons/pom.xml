@@ -14,9 +14,9 @@
     <dependencies>
 
         <dependency>
-            <groupId>v122.de</groupId>
+            <groupId>org.aksw.jena-sparql-api</groupId>
             <artifactId>jena-sparql-api-core</artifactId>
-             <version>3.5.0-2patched</version>  
+             <version>3.5.0-2</version>  
         </dependency>
 
         <dependency>
