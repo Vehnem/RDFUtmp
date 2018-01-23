@@ -89,7 +89,7 @@ public final class ValidateUtils {
                 "This is where the results and the caches are stored. " +
                 "If none exists, bundled versions will be loaded.'");
         cliOptions.addOption("v", "no-LOV", false, "Do not use the LOV service");
-
+        cliOptions.addOption(null, "only-schema-tests", false, "only tests, with aware through schema");
         return cliOptions;
     }
 
