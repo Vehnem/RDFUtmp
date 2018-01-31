@@ -22,6 +22,7 @@ import org.aksw.rdfunit.tests.executors.monitors.SimpleTestExecutorMonitor;
 import org.aksw.rdfunit.tests.generators.TestGeneratorExecutor;
 import org.aksw.rdfunit.utils.RDFUnitUtils;
 import org.aksw.rdfunit.validate.ParameterException;
+import org.aksw.rdfunit.validate.helper.Filter;
 import org.aksw.rdfunit.validate.utils.ValidateUtils;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
@@ -114,7 +115,10 @@ public final class ValidateCLI {
                 configuration.isManualTestsEnabled());
         TestSuite testSuite = testGeneratorExecutor.generateTestSuite(configuration.getTestFolder(), dataset, rdfunit.getAutoGenerators());
 
-
+        if(commandLine.hasOption("only-schema-tests")) {
+        	LOGGER.info("filter tests with schema");
+        	testSuite = Filter.filterTestSuiteForDataset(testSuite, dataset.getExecutionFactory());
+        }
         TestExecutor testExecutor = TestExecutorFactory.createTestExecutor(configuration.getTestCaseExecutionType());
         if (testExecutor == null) {
             displayHelpAndExit("Cannot initialize test executor. Exiting", null);
