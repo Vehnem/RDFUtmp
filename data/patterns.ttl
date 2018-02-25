@@ -84,7 +84,9 @@ rutp:RDFSRANGED a rut:Pattern ;
     dcterms:description """Emulates the rdfs:range (datatype) constrain.""" ;
     rut:sparqlWherePattern """ {
                                     ?this %%P1%% ?c.
-                                    FILTER (DATATYPE(?c) != %%D1%%)
+BIND( DATATYPE(?c) AS ?dt1 )
+OPTIONAL { ?dt1 rdfs:subClassOf ?dt2 OPTIONAL { ?dt2 rdfs:subClassOf ?dt3 OPTIONAL { ?dt3 rdfs:subClassOf ?dt4 } } }
+FILTER ( ( ?dt1 != %%D1%% && ( !bound(?dt2) || ?dt2 != %%D1%%  ) && ( !bound(?dt3) || ?dt3 != %%D1%% ) && ( !bound(?dt4) || ?dt4 != %%D1%% ) ) || isIri(?c) )
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total)
                                      WHERE { ?this %%P1%% ?c .} """ ;
@@ -693,7 +695,7 @@ rutp:COMP a rut:Pattern ;
     rut:sparqlWherePattern """ {
                                     ?this %%P1%% ?beforeVal .
                                     ?this %%P2%% ?afterVal .
-                                    FILTER ( ?beforeVal %%OP%% ?afterVal )
+                                    FILTER ( xsd:date(?beforeVal) %%OP%% xsd:date(?afterVal) )
                                 } """ ;
     rut:sparqlPrevalencePattern """ SELECT (count( DISTINCT ?this) AS ?total) WHERE {
                                         ?this %%P1%% ?beforeVal .
